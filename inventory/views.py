@@ -2,7 +2,10 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics
 from .models import InventoryItem
 
-from django.contrib.auth.models import User
+# ✅ Correct:
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .serializers import (
@@ -10,6 +13,11 @@ from .serializers import (
     UserSerializer,
     UserRegisterSerializer,
 )
+
+from .serializers import InventoryItemSerializer
+from .permissions import IsOwnerOrReadOnly
+
+
 
 class InventoryItemViewSet(viewsets.ModelViewSet):
     serializer_class = InventoryItemSerializer
@@ -24,12 +32,17 @@ class InventoryItemViewSet(viewsets.ModelViewSet):
 
 # InventoryItem Views
 class InventoryItemListCreateView(generics.ListCreateAPIView):
-    queryset = InventoryItem.objects.all().order_by("-created_at")
+    queryset = InventoryItem.objects.all().order_by("date_added")
     serializer_class = InventoryItemSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        if self.request.user.role in ["manager", "admin"]:
+            return InventoryItem.objects.all()
+        return InventoryItem.objects.filter(owner=self.request.user)
 
 
 class InventoryItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

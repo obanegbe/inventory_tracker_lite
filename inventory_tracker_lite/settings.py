@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'rest_framework',
     'inventory',
     'django.contrib.admin',
@@ -138,5 +139,8 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
     ],
 }
+
+
+AUTH_USER_MODEL = "users.User"
 
 

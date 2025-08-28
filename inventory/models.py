@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
+from django.conf import settings
 
 
 class InventoryItem(models.Model):
@@ -10,7 +11,7 @@ class InventoryItem(models.Model):
     category = models.CharField(max_length=100, blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="inventory_items")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inventory_items")
 
     def __str__(self):
         return f"{self.name} ({self.quantity})"
