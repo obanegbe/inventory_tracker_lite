@@ -56,18 +56,22 @@ ROOT_URLCONF = 'inventory_tracker_lite.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'inventory_tracker_lite.wsgi.application'
 
@@ -144,3 +148,11 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = "users.User"
 
 
+# Redirect unauthenticated users here
+LOGIN_URL = '/users/login/'
+
+# After login, send them to their dashboard by default
+LOGIN_REDIRECT_URL = '/inventory/dashboard/'
+
+# After logout, send them to login page
+LOGOUT_REDIRECT_URL = '/users/login/'

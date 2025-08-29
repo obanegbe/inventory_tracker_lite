@@ -17,6 +17,10 @@ urlpatterns = [
 
     # Browsable API login/logout
     path("api-auth/", include("rest_framework.urls")),
+    # for HTML views
+    path("inventory/", include("inventory.urls")),
 
-    path("inventory/", include("inventory.urls")),  # for HTML views
+    path("users/", include("users.urls")),
+
 ]
+

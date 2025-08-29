@@ -1,0 +1,29 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+  <h1>Admin Dashboard - All Inventory Items</h1>
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>ID</th>
+      <th>Item Name</th>
+      <th>Quantity</th>
+      <th>Owner</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </tr>
+    {% for item in items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.owner.username }}</td>
+        <td>{{ item.created_at }}</td>
+        <td>
+          <a href="{% url 'edit_item' item.pk %}">Edit</a> |
+          <a href="{% url 'delete_item' item.pk %}">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No items found.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

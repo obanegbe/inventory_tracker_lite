@@ -38,4 +38,6 @@ urlpatterns = [
     path("add/", views.add_item, name="add_item"),
     path("edit/<int:pk>/", views.edit_item, name="edit_item"),
     path("delete/<int:pk>/", views.delete_item, name="delete_item"),
+
+    path("admin-dashboard/", views.admin_dashboard, name="admin_dashboard"),
 ]

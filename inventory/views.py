@@ -12,15 +12,9 @@ from .serializers import (
     UserSerializer,
     UserRegisterSerializer,
 )
-
-from .serializers import InventoryItemSerializer
 from .permissions import IsOwnerOrReadOnly
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import InventoryItemForm
-
-
-
 
 
 class InventoryItemViewSet(viewsets.ModelViewSet):
@@ -89,8 +83,6 @@ class InventoryItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
 
-
-
 @login_required
 def dashboard(request):
     items = InventoryItem.objects.filter(owner=request.user)
@@ -131,3 +123,13 @@ def delete_item(request, pk):
         item.delete()
         return redirect("dashboard")
     return render(request, "inventory/delete_item.html", {"item": item})
+
+
+def is_superuser(user):
+    return user.is_superuser
+
+@login_required
+@user_passes_test(is_superuser)  # only superusers allowed
+def admin_dashboard(request):
+    items = InventoryItem.objects.all().select_related("owner")  # show all items
+    return render(request, "inventory/admin_dashboard.html", {"items": items})
