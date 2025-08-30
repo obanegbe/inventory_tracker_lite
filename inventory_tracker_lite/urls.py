@@ -1,26 +1,25 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from inventory import views as inventory_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-
     # Inventory app
     path("api/", include("inventory.urls")),
-
     # Users app
     path("api/users/", include("users.urls")),
-
     # JWT auth endpoints
     path("api/auth/login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-
     # Browsable API login/logout
     path("api-auth/", include("rest_framework.urls")),
     # for HTML views
     path("inventory/", include("inventory.urls")),
-
     path("users/", include("users.urls")),
 
+    path('', inventory_views.home, name='home'),
+    # path('api/', include('inventory.api_urls')),
 ]
+
 

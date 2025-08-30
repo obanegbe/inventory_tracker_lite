@@ -1,0 +1,15 @@
+{% extends "inventory/base.html" %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1>Welcome to Obangbe Inventory Management Lite</h1>
+    <p class="lead">Manage your inventory and procurement seamlessly.</p>
+
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+        <a href="{% url 'login' %}" class="btn btn-success btn-lg">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-info btn-lg">Signup</a>
+        <a href="/api/" class="btn btn-secondary btn-lg">API Docs</a>
+    </div>
+</div>
+{% endblock %}

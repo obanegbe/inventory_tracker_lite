@@ -156,3 +156,4 @@ LOGIN_REDIRECT_URL = '/inventory/dashboard/'
 
 # After logout, send them to login page
 LOGOUT_REDIRECT_URL = '/users/login/'
+

@@ -83,6 +83,10 @@ class InventoryItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
 
+def home(request):
+    return render(request, 'inventory/home.html')
+
+
 @login_required
 def dashboard(request):
     items = InventoryItem.objects.filter(owner=request.user)
